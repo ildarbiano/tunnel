@@ -1,0 +1,109 @@
+----------доступ к консоли управления сервером:
+Адрес входа     : https://kvmfrw.iphoster.net/
+----------host:
+2.26.143.84
+root	
+
+
+
+--------------------------
+root@bbest11:~# systemctl list-unit-files --state=enabled | grep service
+root@bbest11:~# 
+systemctl disable cloud-config.service 
+systemctl disable cloud-final.service 
+systemctl disable cloud-init-local.service              
+systemctl disable cloud-init.service     
+systemctl disable snapd.apparmor.service                 
+systemctl disable snapd.autoimport.service               
+systemctl disable snapd.core-fixup.service               
+systemctl disable snapd.recovery-chooser-trigger.service 
+systemctl disable snapd.seeded.service                   
+systemctl disable snapd.service                          
+systemctl disable snapd.system-shutdown.service  
+systemctl disable open-iscsi.service                   
+systemctl disable multipathd.service           
+       
+  reboot
+root@bbest11:~# apt-get update && apt-get upgrade -y
+root@bbest11:~# 
+apt install mc;
+reboot
+root@bbest11:~# echo "Port 3298" > /etc/ssh/sshd_config.d/41-hosting.conf
+root@bbest11:~# cat > /etc/ssh/sshd_config.d/42-hosting.conf << EOF
+DebianBanner no
+Banner none
+Protocol 2
+EOF
+
+root@bbest11:~# 
+root@bbest11:~# systemctl daemon-reload
+root@bbest11:~# systemctl enable ssh
+root@bbest11:~# systemctl restart ssh
+root@bbest11:~# apt install ufw -y
+reboot
+
+Ставим приклад
+root@bbest11:~# bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+Would you like to customize the Panel Port settings? (If not, a random port will be applied) [y/n]: 
+Please set up the panel port: 8090
+Choose an option (default 2 for IP):
+Do you have an IPv6 address to include? (leave empty to skip):
+Port to use for ACME HTTP-01 listener (default 80):
+═══════════════════════════════════════════
+     Panel Installation Complete!
+═══════════════════════════════════════════
+Port:        8090
+WebBasePath: iLC3ERxwuskEErVzgY
+Access URL:  https://127.0.0.1:8090/iLC3ERxwuskEErVzgY
+═══════════════════════════════════════════
+
+sudo apt install net-tools
+root@132242:~# netstat -lpn | grep 'LISTEN '
+tcp        0      0 127.0.0.1:62789         0.0.0.0:*               LISTEN      4854/bin/xray-linux
+tcp        0      0 127.0.0.1:11111         0.0.0.0:*               LISTEN      4854/bin/xray-linux
+tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN      780/sshd: root@pts/
+tcp        0      0 0.0.0.0:3298            0.0.0.0:*               LISTEN      1/init
+tcp6       0      0 :::8090                 :::*                    LISTEN      4841/x-ui
+tcp6       0      0 ::1:6010                :::*                    LISTEN      780/sshd: root@pts/
+tcp6       0      0 :::3298                 :::*                    LISTEN      1/init
+tcp6       0      0 :::2096                 :::*                    LISTEN      4841/x-ui
+        
+
+root@bbest11:~# ufw status
+Status: inactive
+root@bbest11:~# 
+root@bbest11:~# ufw allow 3298/tcp
+root@bbest11:~# ufw allow 31197/tcp 
+root@bbest11:~# ufw enable
+root@bbest11:~# systemctl status ufw
+root@vm4157954:~# ufw status numbered
+Status: active
+     To                         Action      From
+     --                         ------      ----
+[ 1] 3298/tcp                   ALLOW IN    Anywhere
+[ 2] 443/tcp                    ALLOW IN    Anywhere
+[ 3] 3298/tcp (v6)              ALLOW IN    Anywhere (v6)
+[ 4] 443/tcp (v6)               ALLOW IN    Anywhere (v6)
+root@bbest11:~# 
+root@bbest11:~# echo y | ufw delete 3
+root@bbest11:~# 
+root@vm4157954:~# ufw status numbered
+Status: active
+     To                         Action      From
+     --                         ------      ----
+[ 1] 3298/tcp                   ALLOW IN    Anywhere
+[ 2] 443/tcp                    ALLOW IN    Anywhere
+       
+root@bbest11:~# 
+root@bbest11:~# reboot
+root@bbest11:~#
+
+настраиваем проброс порта 8090   -> 127.0.0.1 8090
+
+Public key	NnIzsi2vc8-USIn6MmVrK20ZCr9WfbPahbTox2GXbSk
+short ID	b5680c34e244
+port x-ray	31197
+ID		a65b4dac-c9de-4e79-a631-34d9596f43d0
+SNI		ocsp.digicert.com
+
+

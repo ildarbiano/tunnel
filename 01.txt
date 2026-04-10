@@ -1,0 +1,107 @@
+----------доступ к консоли управления сервером:
+https://billing.firstbyte.ru/billmgr?func=logon
+----------host:
+45.90.217.148
+root	
+
+
+
+--------------------------
+root@bbest11:~# systemctl list-unit-files --state=enabled | grep service
+root@bbest11:~# 
+systemctl disable cloud-config.service 
+systemctl disable cloud-final.service 
+systemctl disable cloud-init-local.service              
+systemctl disable cloud-init.service     
+systemctl disable snapd.apparmor.service                 
+systemctl disable snapd.autoimport.service               
+systemctl disable snapd.core-fixup.service               
+systemctl disable snapd.recovery-chooser-trigger.service 
+systemctl disable snapd.seeded.service                   
+systemctl disable snapd.service                          
+systemctl disable snapd.system-shutdown.service         
+  reboot
+root@bbest11:~# apt-get update && apt-get upgrade -y
+root@bbest11:~# apt install telnet;
+apt install mc;
+reboot
+root@bbest11:~# echo "Port 3298" > /etc/ssh/sshd_config.d/41-hosting.conf
+root@bbest11:~# cat > /etc/ssh/sshd_config.d/42-hosting.conf << EOF
+DebianBanner no
+Banner none
+Protocol 2
+EOF
+
+root@bbest11:~# 
+root@bbest11:~# systemctl daemon-reload
+root@bbest11:~# systemctl enable ssh
+root@bbest11:~# systemctl restart ssh
+root@bbest11:~# apt install ufw -y
+reboot
+
+Ставим приклад
+root@bbest11:~# bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+Would you like to customize the Panel Port settings? (If not, a random port will be applied) [y/n]: y
+Please set up the panel port: 8080
+Choose an option (default 2 for IP):
+Do you have an IPv6 address to include? (leave empty to skip):
+Port to use for ACME HTTP-01 listener (default 80):
+═══════════════════════════════════════════
+     Panel Installation Complete!
+═══════════════════════════════════════════
+Port:        8080
+WebBasePath: 7CDYVgqywL3jZbnHL5
+Access URL:  https://127.0.0.1:8080/7CDYVgqywL3jZbnHL5
+═══════════════════════════════════════════
+sudo apt install net-tools
+root@bbest11:~# netstat -lpn | grep 'LISTEN '
+tcp        0      0 127.0.0.54:53           0.0.0.0:*               LISTEN      468/systemd-resolve 
+tcp        0      0 0.0.0.0:3298            0.0.0.0:*               LISTEN      1/systemd           
+tcp        0      0 127.0.0.1:62789         0.0.0.0:*               LISTEN      5518/bin/xray-linux 
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      468/systemd-resolve 
+tcp        0      0 127.0.0.1:11111         0.0.0.0:*               LISTEN      5518/bin/xray-linux 
+tcp6       0      0 :::2096                 :::*                    LISTEN      5510/x-ui           
+tcp6       0      0 :::3298                 :::*                    LISTEN      1/systemd           
+tcp6       0      0 :::8080                 :::*                    LISTEN      5510/x-ui           
+root@vm4157954:~# netstat -lpn | grep 'LISTEN '
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      254/systemd-resolve
+tcp        0      0 127.0.0.1:11111         0.0.0.0:*               LISTEN      5281/bin/xray-linux
+tcp        0      0 127.0.0.54:53           0.0.0.0:*               LISTEN      254/systemd-resolve
+tcp        0      0 127.0.0.1:62789         0.0.0.0:*               LISTEN      5281/bin/xray-linux
+tcp        0      0 0.0.0.0:3298            0.0.0.0:*               LISTEN      1/init
+tcp6       0      0 :::8080                 :::*                    LISTEN      5268/x-ui
+tcp6       0      0 :::2096                 :::*                    LISTEN      5268/x-ui
+tcp6       0      0 :::3298                 :::*                    LISTEN      1/init
+
+
+root@bbest11:~# ufw status
+Status: inactive
+root@bbest11:~# 
+root@bbest11:~# ufw allow 3298/tcp
+root@bbest11:~# ufw allow 443/tcp 
+root@bbest11:~# ufw enable
+root@bbest11:~# systemctl status ufw
+root@vm4157954:~# ufw status numbered
+Status: active
+     To                         Action      From
+     --                         ------      ----
+[ 1] 3298/tcp                   ALLOW IN    Anywhere
+[ 2] 443/tcp                    ALLOW IN    Anywhere
+[ 3] 3298/tcp (v6)              ALLOW IN    Anywhere (v6)
+[ 4] 443/tcp (v6)               ALLOW IN    Anywhere (v6)
+root@bbest11:~# 
+root@bbest11:~# echo y | ufw delete 3
+root@bbest11:~# 
+root@vm4157954:~# ufw status numbered
+Status: active
+     To                         Action      From
+     --                         ------      ----
+[ 1] 3298/tcp                   ALLOW IN    Anywhere
+[ 2] 443/tcp                    ALLOW IN    Anywhere
+       
+root@bbest11:~# 
+root@bbest11:~# reboot
+root@bbest11:~#
+
+настраиваем проброс порта 8080   -> 127.0.0.1 8080
+
