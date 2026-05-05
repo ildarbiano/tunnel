@@ -1,5 +1,6 @@
 ----------доступ к консоли управления сервером:
-Адрес входа     : https://kvmfrw.iphoster.net/
+Адрес входа            : https://kvmfrw.iphoster.net/
+Биллинговая панель     : https://iphoster.net/billing.php
 ----------host:
 2.26.143.84
 root	
