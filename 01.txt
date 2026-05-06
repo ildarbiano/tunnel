@@ -1,5 +1,8 @@
 ----------доступ к консоли управления сервером:
 https://billing.firstbyte.ru/billmgr?func=logon
+06/05/26 Баланс: 
+509.43 RUB
+
 ----------host:
 45.90.217.148
 root	
