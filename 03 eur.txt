@@ -1,0 +1,31 @@
+IP Адрес : 153.56.171.32
+
+>> Данные для доступа к панели управления
+Адрес  : https://kvmfro.iphoster.net/
+Логин  : bsusgo@gmail.com
+Пароль : CsRk9x@dhaj2
+-------------
+
+>> Данные для доступа к серверу (SSH)
+IP Адрес : 153.56.171.32
+Логин    : root
+Пароль   : qQiL72FvhHfSag
+
+>> DNS-сервера
+Primary   : ns1.132242.ip-ns.net
+Secondary : ns2.132242.ip-ns.net
+==================================
+
+
+Ставим приклад
+root@bbest11:~# bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)
+Choose [1]:
+Would you like to customize the Panel Port settings? (If not, a random port will be applied) [y/n]: y
+Please set up the panel port: 8090
+Your Panel Port is: 8090
+Choose an option (default 2 for IP): 4
+Bind the panel to 127.0.0.1 only? (recommended — forces SSH tunnel / reverse-proxy access) [y/N]: y
+
+
+# Установить Xray 26.6.22
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version 26.6.22

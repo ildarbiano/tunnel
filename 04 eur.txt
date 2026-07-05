@@ -1,0 +1,16 @@
+IP Адрес : 153.56.171.32
+
+# Установить 3X-UI 3.4.0
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v3.4.0
+
+═══════════════════════════════════════════
+     Panel Installation Complete!
+═══════════════════════════════════════════
+Username:    L7PRh0YGwt
+Password:    rfRAn7GklJ
+Access URL:  http://127.0.0.1:8090/Xd2pC1QYkqo2HG49XB
+
+═══════════════════════════════════════════
+
+
+
